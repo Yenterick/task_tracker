@@ -1,0 +1,63 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_taskTracker
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 2007
+      MYSQL_DATABASE: task_tracker
+      MYSQL_USER: Yenterick
+      MYSQL_PASSWORD: 2007
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p0328"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+
+  backend:
+    build: ./backend
+    container_name: express_taskTracker
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: Yenterick
+      DB_PASSWORD: 2007
+      DB_NAME: task_tracker
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: react_taskTracker
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge

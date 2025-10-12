@@ -1,0 +1,26 @@
+task_tracker/
+│
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── models/
+│   │   ├── config/
+│   │   └── app.js
+│   ├── package.json
+│   └── Dockerfile
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   └── App.jsx
+│   ├── package.json
+│   └── Dockerfile
+│
+├── docker-compose.yml
+└── README.md
+
+
+
