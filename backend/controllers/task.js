@@ -42,7 +42,20 @@ const deleteTask = async (req, res) => {
     if (result.error) {
         res.status(400).json({ success: false, message: error });
     } else {
-        res.status(204).json({ success: true, message: "Task deleted succesfully"});
+        res.status(200).json({ success: true, message: "Task deleted succesfully"});
+    }
+}
+
+const updateTaskStatus = async (req, res) => {
+    const { task_id } = req.params;
+    const { newStatus } = req.body;
+
+    const result = await taskModel.updateTaskStatus(task_id, newStatus);
+
+    if (result.error) {
+        res.status(400).json({ success: false, message: error });
+    } else {
+        res.status(200).json({ success: true, message: "Task updated succesfully"});
     }
 }
 
@@ -50,5 +63,6 @@ module.exports = {
     showAllTasks,
     showTasks,
     addTask,
-    deleteTask
+    deleteTask,
+    updateTaskStatus
 }

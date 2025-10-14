@@ -1,4 +1,4 @@
-const db = require("../config/database");
+const db = require("../config/database.js");
 
 const TaskModel = {
     selectAllTasks : async () => {
@@ -30,11 +30,21 @@ const TaskModel = {
 
     deleteTask : async (task_id) => {
         try {
-            const [ rows ] = await db.promise().query('DELETE * FROM tasks WHERE id = ?', [task_id]);
+            const [ rows ] = await db.promise().query('DELETE FROM tasks WHERE id = ?', [task_id]);
             return { success: true, data: rows };
         } catch (e) {
-            return { success: false, error: e};
+            return { success: false, error: e };
         }
+    },
+
+    //TODO: Test this function
+    updateTaskStatus : async (task_id, newStatus) => {
+        try {
+            const [ rows ] = await db.promise().query('UPDATE tasks SET status = ? WHERE id = ?', [newStatus, task_id]);
+            return { success: true, data: rows };
+        } catch (e) {
+            return { success: false, error: e };
+        } 
     }
 };
 

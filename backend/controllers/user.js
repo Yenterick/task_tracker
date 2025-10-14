@@ -1,4 +1,4 @@
-const userModel = require('../models/userModel');
+const userModel = require('../models/userModel.js');
 const { generateToken } = require('../config/jwt.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 3;
