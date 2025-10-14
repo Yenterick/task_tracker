@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users(
   id INT auto_increment PRIMARY KEY,
   username VARCHAR(50),
   email VARCHAR(50) UNIQUE,
-  password VARCHAR(50),
+  password VARCHAR(200),
   created_at TIMESTAMP default current_timestamp
 );
 
@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS tasks(
   description TEXT,
   status ENUM('pending', 'in progress', 'completed'),
   priority ENUM('low', 'mid', 'high'),
-  due_date DATE,
   created_at TIMESTAMP default current_timestamp,
   foreign key(user_id) references users(id)
 );

@@ -3,6 +3,15 @@ const { generateToken } = require('../config/jwt.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 3;
 
+const showAllUsers = async (req, res) => {
+    const result = await userModel.selectAllUsers();
+    if (result.error) {
+        res.status(400).json({ succes: false, message: result.error});
+    } else {
+        res.status(200).json({ success: true, data: result.data });
+    }
+}
+
 const registerUser = async (req, res) => {
     const { username, email, password } = req.body;
     const hashed = await bcrypt.hash(password, saltRounds);
@@ -33,13 +42,8 @@ const logUser = async (req, res) => {
     res.status(200).json({ success: true, message: "Logged successfully", token });
 }
 
-const showAllUsers = async (req, res) => {
-    const result = await userModel.selectAllUsers();
-    res.status(200).json({ success: true, data : result.data });
-}
-
 module.exports = {
+    showAllUsers,
     registerUser,
     logUser,
-    showAllUsers
 }
