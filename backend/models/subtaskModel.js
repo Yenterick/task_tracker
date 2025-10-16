@@ -37,7 +37,6 @@ const subtaskModel = {
         }
     },
 
-    //TODO: Test this function
     updateSubTaskStatus : async (subtask_id, newStatus) => {
         try {
             const [ rows ] = await db.promise().query('UPDATE subtasks SET status = ? WHERE id = ?', [newStatus, subtask_id]);
