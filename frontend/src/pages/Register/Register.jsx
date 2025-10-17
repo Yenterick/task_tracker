@@ -1,10 +1,10 @@
 import PixelBlast from "../../components/PixelBlast/PixelBlast";
 import SpotlightCard from "../../components/SpotlightCard/SpotlightCard";
-import "./Login.css";
+import "./Register.css";
 
-function Login (){
+function Register (){
     return (
-        <div className="login-page">
+        <div className="register-page">
             <div className="background">
                 <PixelBlast
                 variant="square"
@@ -17,18 +17,20 @@ function Login (){
                 edgeFade={0.25}
                 />
             </div>
-            <SpotlightCard className="login-block" spotlightColor="#B19EEF">
-                <h2>¡Welcome Back!</h2>
-                <p>Sign in to continue</p>
+            <SpotlightCard className="register-block" spotlightColor="#B19EEF">
+                <h2>¡Welcome!</h2>
+                <p>Sign up to continue</p>
                 <label>Email</label>
                 <input type="email" name="username" id="username" placeholder="Insert your email..." />
+                <label>Username</label>
+                <input type="text" name="username" id="username" placeholder="Insert your username..."/>
                 <label>Password</label>
                 <input type="password" name="password" id="password" placeholder="Insert your password..."/>
-                <button className="button">Login</button>
-                <span>Don't you have an account? <a href="/register">Register</a></span>
+                <button className="button">Register</button>
+                <span>Do you already have an account? <a href="/login">Login</a></span>
             </SpotlightCard>
         </div>
     );
 }
 
-export default Login
+export default Register
