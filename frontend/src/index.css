@@ -7,3 +7,23 @@
 body {
     margin: 0%;
 }
+
+.button {
+    background-color: #B19EEF;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #8b6dec;
+}
+
+.button:active {
+    background-color: #beacf1;
+}
