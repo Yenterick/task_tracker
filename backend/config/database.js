@@ -26,7 +26,7 @@ function handleConnection() {
       console.log("MySQL connection error detected, attempting to reconnect...");
       handleConnection();
     } else {
-      console.error("Fatal MySQL error detected (will not throw to prevent container crash):", err);
+      console.error("Fatal MySQL error detected", err);
     }
   });
 }
@@ -34,3 +34,4 @@ function handleConnection() {
 handleConnection();
 
 module.exports = db;
+

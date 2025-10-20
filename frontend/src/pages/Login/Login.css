@@ -36,6 +36,11 @@
     color: rgba(255, 255, 255, 0.418);
 }
 
+.login-block form{
+    display: flex;
+    flex-direction: column;
+}
+
 .login-block label {
     color: rgba(255, 255, 255, 0.753);
 }
@@ -58,6 +63,11 @@
 .login-block .button {
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.login-block .button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .login-block a {

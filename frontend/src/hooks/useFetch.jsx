@@ -1,28 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 
+function useFetch(url = "") {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-function useFetch (url, method, body = NaN) {
-    set [ data, setData ] = useState(NaN);
+  const request = useCallback(async (endpoint = "", method = "GET", body = null) => {
+    setLoading(true);
+    setError(null);
 
-    switch(method.toUpperCase()) {
-        case "GET":
-            useEffect(fetch(url, {method: "GET"})
-                        .then((response) => { response.json() })
-                        .then((result) => { () => setData(result) })
-                        .catch((error) => {`${error} - Couldn't get a valid response from the API`})
-                    , [])
-            break;
-        case "POST":
-            useEffect( async () => setData(await fetch(url, {method: "POST", body: JSON.stringify(body)})));
-            break;
-        case "PUT":
-            useEffect(fetch(url, {method: "GET"}), []);
-            break;
-        case "DELETE":
-            useEffect(fetch(url, {method: "GET"}), []);
-            break;
+    try {
+      const options = {
+        method: method.toUpperCase(),
+        headers: { "Content-Type": "application/json" },
+      };
+
+      if (body && method !== "GET") {
+        options.body = JSON.stringify(body);
+      }
+
+      const response = await fetch(url + endpoint, options);
+
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || `HTTP ${response.status}`);
+
+      setData(result);
+      return result;
+    } catch (err) {
+      setError(err.message);
+      return null;
+    } finally {
+      setLoading(false);
     }
+  }, [url]);
+
+  return { data, loading, error, request };
 }
 
 export default useFetch;
-

@@ -1,9 +1,12 @@
 const express = require('express');
+const cors = require("cors");
 const user = require('./routes/user.js');
 const task = require('./routes/task.js');
 const subtask = require('./routes/subtask.js')
 
 app = express();
+
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
