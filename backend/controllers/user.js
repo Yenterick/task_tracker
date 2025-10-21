@@ -39,7 +39,7 @@ const logUser = async (req, res) => {
 
     const token = generateToken({ id: user.id, email: user.email });
 
-    res.status(200).json({ success: true, message: "Logged successfully", token });
+    res.status(200).json({ success: true, message: "Logged successfully", token, id: user.id });
 }
 
 module.exports = {

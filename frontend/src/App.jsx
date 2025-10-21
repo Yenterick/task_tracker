@@ -4,14 +4,17 @@ import Register from './pages/Register/Register.jsx';
 import TaskMenu from './pages/TaskMenu/TaskMenu.jsx';
 
 function App() {
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/taskMenu" element={<TaskMenu/>}/>
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/taskMenu" element={<TaskMenu/>}/>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

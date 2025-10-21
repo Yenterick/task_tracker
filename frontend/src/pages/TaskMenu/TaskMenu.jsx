@@ -1,40 +1,52 @@
+import { useEffect, useState } from "react";
+import useFetch from "../../hooks/useFetch";
 import PixelBlast from "../../components/PixelBlast/PixelBlast";
-import SpotlightCard from "../../components/SpotlightCard/SpotlightCard";
+import AnimatedList from "../../components/AnimatedList/AnimatedList";
 import "./TaskMenu.css";
 
-function TaskMenu (){
+function TaskMenu() {
+  const [tasks, setTasks] = useState([]);
+  const { request, loading, error } = useFetch(import.meta.env.VITE_BACKEND_URL + "/api");
 
-    const taskList = [{id: 1, title: "ExampleTask1", description: "ExampleDescription1", status: "pending", priority: "high"}, 
-                      {id: 2, title: "ExampleTask2", description: "ExampleDescription2", status: "in proggress", priority: "low"},
-                      {id: 3, title: "ExampleTask3", description: "ExampleDescription3", status: "completed", priority: "mid"},
-                      {id: 4, title: "ExampleTask4", description: "ExampleDescription4", status: "pending", priority: "high"}]
+  useEffect(() => {
+    const fetchTasks = async () => {
+        const response = await request(`/task/${localStorage.getItem("ID")}`, "GET");
+        if (response && response.success) {
+          setTasks(response.data);
+        } else {
+          console.error(error);
+        }
+      }
+    fetchTasks();
+  }, [tasks]);
 
-    const listItems = taskList.map(task => (<li key={task.id}>
-                                                <SpotlightCard spotlightColor="#B19EEF">
-                                                    <p>{task.title}</p>
-                                                    <p>{task.description}</p>
-                                                </SpotlightCard>
-                                            </li>))
+  return (
+    <div className="taskMenu-page">
+      <div className="background">
+        <PixelBlast
+          variant="square"
+          pixelSize={8}
+          color="#B19EEF"
+          patternScale={2}
+          enableRipples
+          rippleSpeed={0.5}
+          speed={0.5}
+          edgeFade={0.25}
+        />
+      </div>
 
-    return (
-        <div className="taskMenu-page">
-            <div className="background">
-                <PixelBlast
-                variant="square"
-                pixelSize={8}
-                color="#B19EEF"
-                patternScale={2}
-                enableRipples
-                rippleSpeed={0.5}
-                speed={0.5}
-                edgeFade={0.25}
-                />
-            </div>
-            <div className="taskList">
-                <ul></ul>
-            </div>
-        </div>
-    );
+      <div className="task-list">
+            <AnimatedList enableArrowNavigation displayScrollbar items={tasks.map((task, id) => (
+                        <div key={id} className="task-container">
+                            <h3>{task.title}</h3>
+                            <p>{task.description}</p>
+                            <button className="button">Edit</button>
+                            <button className="button">Delete</button>
+                        </div>
+                    ))}/>
+      </div>
+    </div>
+  );
 }
 
-export default TaskMenu
+export default TaskMenu;

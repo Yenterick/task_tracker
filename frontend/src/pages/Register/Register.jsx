@@ -28,37 +28,37 @@ function Register (){
         }
     };
 
-        return (
-            <div className="register-page">
-                <div className="background">
-                    <PixelBlast
-                    variant="square"
-                    pixelSize={8}
-                    color="#B19EEF"
-                    patternScale={2}
-                    enableRipples
-                    rippleSpeed={0.5}
-                    speed={0.5}
-                    edgeFade={0.25}
-                    />
-                </div>
-                <SpotlightCard className="register-block" spotlightColor="#B19EEF">
-                    <h2>¡Welcome!</h2>
-                    <p>Sign up to continue</p>
-                    <form onSubmit={handleSubmit}>
-                        <label>Email</label>
-                        <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Insert your email..." />
-                        <label>Username</label>
-                        <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Insert your username..."/>
-                        <label>Password</label>
-                        <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Insert your password..."/>
-                        <button type="submit" className="button" disabled={loading}>{loading ? "Loading..." : "Register"}</button>
-                    </form>
-                    <span>Do you already have an account? <a href="/login">Login</a></span>
-                </SpotlightCard>
-                {loading && <SpotlightLoading text="Creating account..." />}
+    return (
+        <div className="register-page">
+            <div className="background">
+                <PixelBlast
+                variant="square"
+                pixelSize={8}
+                color="#B19EEF"
+                patternScale={2}
+                enableRipples
+                rippleSpeed={0.5}
+                speed={0.5}
+                edgeFade={0.25}
+                />
             </div>
-        );
+            <SpotlightCard className="register-block" spotlightColor="#B19EEF">
+                <h2>¡Welcome!</h2>
+                <p>Sign up to continue</p>
+                <form onSubmit={handleSubmit}>
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Insert your email..." />
+                    <label>Username</label>
+                    <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Insert your username..."/>
+                    <label>Password</label>
+                    <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Insert your password..."/>
+                    <button type="submit" className="button" disabled={loading}>{loading ? "Loading..." : "Register"}</button>
+                </form>
+                <span>Do you already have an account? <a href="/login">Login</a></span>
+            </SpotlightCard>
+            {loading && <SpotlightLoading text="Creating account..." />}
+        </div>
+    );
 }
 
 export default Register

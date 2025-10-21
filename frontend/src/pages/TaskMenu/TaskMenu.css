@@ -19,7 +19,17 @@
 
 /* Task list config */
 
-.taskList {
+.task-list {
     align-self: flex-start;
+    justify-self: center;
+    width: 50%;
+}
+
+.task-list AnimatedList {
+    width: 100%;
+}
+
+.task-list AnimatedList .task-container{
+    width: 100%;
 }
 
