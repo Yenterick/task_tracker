@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .background { 
@@ -22,14 +23,98 @@
 .task-list {
     align-self: flex-start;
     justify-self: center;
-    width: 50%;
+    width: 100%;
+    height: 100%;
 }
 
-.task-list AnimatedList {
+.task-list .task-container {
+    display: flex;
+    flex-direction: row;
     width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.task-list AnimatedList .task-container{
+.task-list .task-container .task-text {
+    width: 80%;
+}
+
+.task-list .task-container .task-text h2{
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+}
+
+.task-list .task-container .task-text p{
+    margin-top: 1%;
+    margin-bottom: 1%;
+    opacity: 0.5;
+}
+
+.task-list .task-container .task-buttons {
+    display: flex;
+    width: 10%;
+    height: 3rem;
+    gap: 1%;
+}
+
+.task-list .task-container .task-buttons .button {
+    background-color: transparent;
     width: 100%;
+    height: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+    text-justify: center;
+}
+
+.task-list .task-container .task-buttons .button:hover {
+    background-color: #8b6dec;
+}
+
+.task-list .task-container .task-buttons .button:active {
+    background-color: #ffffff;
+    color: #8b6dec;
+}
+
+/* Footer config */
+
+#add-task {
+    padding: 0;
+    position: absolute;
+    bottom: 10%;
+    width: 5%;
+    height: 10%;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    text-justify: center;
+    background-color: #271e37;
+}
+
+#add-task:hover {
+    background-color: #B19EEF;
+}
+
+#add-task:active {
+    background-color: #ffffff;
+    color: #8b6dec;
+}
+
+.log-out {
+    cursor: pointer;
+    padding: 0;
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    width: 5%;
+    height: 10%;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    text-justify: center;
+    background-color: transparent;
+    border: none;
 }
 
