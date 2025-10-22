@@ -3,12 +3,12 @@
 .taskMenu-page {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .background { 
@@ -16,56 +16,75 @@
     height: 100%; 
     background: black;
     position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 /* Task list config */
 
 .task-list {
-    align-self: flex-start;
-    justify-self: center;
-    width: 100%;
-    height: 100%;
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 1000px;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
 }
 
 .task-list .task-container {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    height: 100%;
     justify-content: space-between;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.task-list .task-container:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .task-list .task-container .task-text {
     width: 80%;
+    color: white;
 }
 
-.task-list .task-container .task-text h2{
-    margin-top: 1%;
-    margin-bottom: 1%;
-
+.task-list .task-container .task-text h2 {
+    margin: 0.2rem 0;
+    font-size: clamp(1rem, 2vw, 1.4rem);
 }
 
-.task-list .task-container .task-text p{
-    margin-top: 1%;
-    margin-bottom: 1%;
-    opacity: 0.5;
+.task-list .task-container .task-text p {
+    margin: 0.2rem 0;
+    opacity: 0.6;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
 }
 
 .task-list .task-container .task-buttons {
     display: flex;
-    width: 10%;
-    height: 3rem;
-    gap: 1%;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .task-list .task-container .task-buttons .button {
     background-color: transparent;
-    width: 100%;
-    height: 100%;
-    font-size: 1.5rem;
-    text-align: center;
-    text-justify: center;
+    border: none;
+    color: white;
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
 .task-list .task-container .task-buttons .button:hover {
@@ -79,16 +98,24 @@
 
 /* Footer config */
 
+#add-task, .log-out {
+    position: fixed;
+    bottom: 2rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 10;
+    transition: all 0.2s ease;
+}
+
 #add-task {
-    padding: 0;
-    position: absolute;
-    bottom: 10%;
-    width: 5%;
-    height: 10%;
-    font-size: 3rem;
-    font-weight: bold;
-    text-align: center;
-    text-justify: center;
+    right: 2rem;
+    width: clamp(3rem, 6vw, 5rem);
+    height: clamp(3rem, 6vw, 5rem);
+    font-size: clamp(2rem, 4vw, 3rem);
     background-color: #271e37;
 }
 
@@ -102,19 +129,42 @@
 }
 
 .log-out {
-    cursor: pointer;
-    padding: 0;
-    position: absolute;
-    bottom: 1%;
-    right: 1%;
-    width: 5%;
-    height: 10%;
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    text-justify: center;
+    left: 2rem;
+    width: clamp(2.5rem, 5vw, 4rem);
+    height: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(1.2rem, 2vw, 2rem);
     background-color: transparent;
-    border: none;
 }
 
+@media (max-width: 768px) {
+    .task-list {
+        width: 95%;
+        gap: 0.8rem;
+    }
+
+    .task-list .task-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-list .task-container .task-text {
+        width: 100%;
+    }
+
+    .task-list .task-container .task-buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    #add-task {
+        right: 1rem;
+        bottom: 1rem;
+    }
+
+    .log-out {
+        left: 1rem;
+        bottom: 1rem;
+    }
+}

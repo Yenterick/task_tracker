@@ -5,13 +5,12 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
-    align-items: center;
     z-index: 999;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(3px);
 }
 
-.loading-block {
+.modal-block {
     display: flex;
     flex-direction: column;
     border: rgba(255, 255, 255, 0.116) solid 2px;
@@ -25,13 +24,7 @@
     box-sizing: border-box;
 }
 
-.loading-block img {
-    width: 100px;
-    height: auto;
-    margin-bottom: 15px;
-}
-
-.loading-block h2 {
+.modal-block h2 {
     font-size: 1rem;
     margin: 0; 
     text-align: center;

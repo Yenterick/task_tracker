@@ -5,7 +5,7 @@ import AnimatedList from "../../components/AnimatedList/AnimatedList";
 import "./TaskMenu.css";
 
 function TaskMenu() {
-  const [tasks, setTasks] = useState([]);
+  const [ tasks, setTasks ] = useState([]);
   const { request, loading, error } = useFetch(import.meta.env.VITE_BACKEND_URL + "/api");
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function TaskMenu() {
       </div>
 
       <div className="task-list">
-        <AnimatedList showGradients={false} enableArrowNavigation displayScrollbar items={taskExamples.map((task, id) => (
+        <AnimatedList showGradients={false} displayScrollbar items={taskExamples.map((task, id) => (
           <div key={id} className="task-container">
             <div className="task-text">
               <h2>{task.title}</h2>
@@ -62,9 +62,9 @@ function TaskMenu() {
         ))}/>
       </div>
 
-      <button id="add-task" className="button">+</button>
+      <button id="add-task" className="button" onClick={() => {setShowModal(true)}}>+</button>
       <button className="log-out"><i class="fa-solid fa-right-from-bracket"></i></button>
-      
+
     </div>
   );
 }

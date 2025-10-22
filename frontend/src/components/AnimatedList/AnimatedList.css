@@ -38,10 +38,6 @@
   margin-bottom: 0.5rem;
 }
 
-.item.selected {
-  background-color: #B19EEF;
-}
-
 .item-text {
   color: white;
   margin: 0;
