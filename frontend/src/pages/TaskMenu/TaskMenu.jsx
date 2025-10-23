@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import PixelBlast from "../../components/PixelBlast/PixelBlast";
 import AnimatedList from "../../components/AnimatedList/AnimatedList";
@@ -6,10 +7,11 @@ import SpotlightTaskModal from "../../components/SpotlightTaskModal/SpotlightTas
 import "./TaskMenu.css";
 
 function TaskMenu() {
+  const navigate = useNavigate();
   const [ task_id, setTask_id ] = useState();
   const [ tasks, setTasks ] = useState([]);
   const [ showAddModal, setShowAddModal ] = useState(false);
-  const [ showEditModal, setShowEditModal] = useState(false);
+  const [ showEditModal, setShowEditModal ] = useState(false);
   const { request, loading, error } = useFetch(import.meta.env.VITE_BACKEND_URL + "/api");
 
   useEffect(() => {
@@ -28,13 +30,18 @@ function TaskMenu() {
     setTask_id(taskId)
     setShowEditModal(true);
   }
-  
 
   const handleDelete = async (taskId) => {
     const response = await request(`/task/${taskId}`, "DELETE");
     if (!response || !response.success) {
       console.log(error);
     }
+  }
+
+  const handleLogOut = () => {
+    localStorage.setItem("token", "");
+    localStorage.setItem("ID", "");
+    navigate("/login", { replace: true });
   }
 
   return (
@@ -63,6 +70,7 @@ function TaskMenu() {
               <p>{task.description}</p>
             </div>
             <div className="task-buttons">
+              <i id="priority-status" style={{color : task.priority === "high"? "#ff6b6b" : task.priority === "mid" ? "#ffe66d" : "#70e000" }} class="fa-solid fa-circle"></i>
               <button className="button" onClick={() => handleEdit(task.id)}><i class="fa-solid fa-pencil"></i></button>
               <button className="button" onClick={() => handleDelete(task.id)}><i class="fa-solid fa-trash"></i></button>
             </div>
@@ -71,7 +79,7 @@ function TaskMenu() {
       </div>
 
       <button id="add-task" className="button" onClick={() => {setShowAddModal(true)}}>+</button>
-      <button className="log-out"><i class="fa-solid fa-right-from-bracket"></i></button>
+      <button className="log-out" onClick={handleLogOut}><i class="fa-solid fa-right-from-bracket"></i></button>
 
     </div>
   );

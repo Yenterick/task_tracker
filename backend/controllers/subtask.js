@@ -1,6 +1,4 @@
-const subtaskModel = require('../models/subtaskModel.js')
-
-//TODO: Implement all the model functions
+const subtaskModel = require('../models/subtaskModel.js');
 
 const showAllSubtasks = async (req, res) => {
 
