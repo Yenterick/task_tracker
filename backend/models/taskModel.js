@@ -37,9 +37,9 @@ const TaskModel = {
         }
     },
 
-    updateTaskStatus : async (task_id, newStatus) => {
+    updateTask : async (task_id, title, description, priority) => {
         try {
-            const [ rows ] = await db.promise().query('UPDATE tasks SET status = ? WHERE id = ?', [newStatus, task_id]);
+            const [ rows ] = await db.promise().query('UPDATE tasks SET title = ?, description = ?, priority = ? WHERE id = ?', [title, description, priority, task_id]);
             return { success: true, data: rows };
         } catch (e) {
             return { success: false, error: e };

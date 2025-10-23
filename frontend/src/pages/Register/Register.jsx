@@ -47,11 +47,11 @@ function Register (){
                 <p>Sign up to continue</p>
                 <form onSubmit={handleSubmit}>
                     <label>Email</label>
-                    <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Insert your email..." />
+                    <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} maxLength={40} placeholder="Insert your email..." />
                     <label>Username</label>
-                    <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Insert your username..."/>
+                    <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} maxLength={20} placeholder="Insert your username..."/>
                     <label>Password</label>
-                    <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Insert your password..."/>
+                    <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} maxLength={20} placeholder="Insert your password..."/>
                     <button type="submit" className="button" disabled={loading}>{loading ? "Loading..." : "Register"}</button>
                 </form>
                 <span>Do you already have an account? <a href="/login">Login</a></span>

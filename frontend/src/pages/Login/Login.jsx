@@ -49,9 +49,9 @@ function Login() {
             <p>Sign in to continue</p>
             <form onSubmit={handleSubmit}>
                 <label>Email</label>
-                <input type="email" placeholder="Insert your email..." value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                <input type="email" placeholder="Insert your email..." value={email} onChange={(e) => setEmail(e.target.value)} maxLength={40} required/>
                 <label>Password</label>
-                <input type="password" placeholder="Insert your password..." value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                <input type="password" placeholder="Insert your password..." value={password} onChange={(e) => setPassword(e.target.value)} maxLength={20} required/>
                 <button type="submit" className="button" disabled={loading}> {loading ? "Loading..." : "Login"} </button>
             </form>
             <span>Don't you have an account? <a href="/register">Register</a></span>

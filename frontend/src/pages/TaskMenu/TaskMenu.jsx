@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import PixelBlast from "../../components/PixelBlast/PixelBlast";
 import AnimatedList from "../../components/AnimatedList/AnimatedList";
+import SpotlightTaskModal from "../../components/SpotlightTaskModal/SpotlightTaskModal";
 import "./TaskMenu.css";
 
 function TaskMenu() {
+  const [ task_id, setTask_id ] = useState();
   const [ tasks, setTasks ] = useState([]);
+  const [ showAddModal, setShowAddModal ] = useState(false);
+  const [ showEditModal, setShowEditModal] = useState(false);
   const { request, loading, error } = useFetch(import.meta.env.VITE_BACKEND_URL + "/api");
 
   useEffect(() => {
@@ -20,17 +24,18 @@ function TaskMenu() {
     fetchTasks();
   }, [tasks]);
 
-  const taskExamples = [{title: "Test Task 1", description: "Test Description 1"}, 
-    {title: "Test Task 2", description: "Test Description 2"},
-    {title: "Test Task 3", description: "Test Description 3"},
-    {title: "Test Task 4", description: "Test Description 4"},
-    {title: "Test Task 5", description: "Test Description 5"},
-    {title: "Test Task 6", description: "Test Description 6"},
-    {title: "Test Task 7", description: "Test Description 7"},
-    {title: "Test Task 8", description: "Test Description 8"},
-    {title: "Test Task 9", description: "Test Description 9"},
-    {title: "Test Task 10", description: "Test Description 10"}
-  ]
+  const handleEdit = async (taskId) => {
+    setTask_id(taskId)
+    setShowEditModal(true);
+  }
+  
+
+  const handleDelete = async (taskId) => {
+    const response = await request(`/task/${taskId}`, "DELETE");
+    if (!response || !response.success) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="taskMenu-page">
@@ -47,22 +52,25 @@ function TaskMenu() {
         />
       </div>
 
+      { showAddModal && <SpotlightTaskModal method="POST" text="Insert a New Task!" onClose={() => setShowAddModal(false)}/> }
+      { showEditModal && <SpotlightTaskModal task_id={task_id} method="PUT" text="Insert the New Values!" onClose={() => setShowEditModal(false)}/> }
+
       <div className="task-list">
-        <AnimatedList showGradients={false} displayScrollbar items={taskExamples.map((task, id) => (
-          <div key={id} className="task-container">
+        <AnimatedList showGradients={false} displayScrollbar items={tasks.map((task, id) => (
+          <div key={task.id} className="task-container">
             <div className="task-text">
               <h2>{task.title}</h2>
               <p>{task.description}</p>
             </div>
             <div className="task-buttons">
-              <button className="button"><i class="fa-solid fa-pencil"></i></button>
-              <button className="button"><i class="fa-solid fa-trash"></i></button>
+              <button className="button" onClick={() => handleEdit(task.id)}><i class="fa-solid fa-pencil"></i></button>
+              <button className="button" onClick={() => handleDelete(task.id)}><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
         ))}/>
       </div>
 
-      <button id="add-task" className="button" onClick={() => {setShowModal(true)}}>+</button>
+      <button id="add-task" className="button" onClick={() => {setShowAddModal(true)}}>+</button>
       <button className="log-out"><i class="fa-solid fa-right-from-bracket"></i></button>
 
     </div>
@@ -70,12 +78,3 @@ function TaskMenu() {
 }
 
 export default TaskMenu;
-
-// items={tasks.map((task, id) => (
-//                         <div key={id} className="task-container">
-//                             <h3>{task.title}</h3>
-//                             <p>{task.description}</p>
-//                             <button className="button">Edit</button>
-//                             <button className="button">Delete</button>
-//                         </div>
-//                     ))}
