@@ -12,7 +12,7 @@ function TaskMenu() {
   const [ tasks, setTasks ] = useState([]);
   const [ showAddModal, setShowAddModal ] = useState(false);
   const [ showEditModal, setShowEditModal ] = useState(false);
-  const { request, loading, error } = useFetch(import.meta.env.VITE_BACKEND_URL + "/api");
+  const { request, loading, error } = useFetch(`http://${window.location.hostname}:5000` + "/api");
 
   useEffect(() => {
     const fetchTasks = async () => {

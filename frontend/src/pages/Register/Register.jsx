@@ -13,7 +13,7 @@ function Register (){
     const [ data, setData ] = useState(null);
     const navigate = useNavigate();
 
-    const { request, loading, error } = useFetch(import.meta.env.VITE_BACKEND_URL + '/api');
+    const { request, loading, error } = useFetch(`http://${window.location.hostname}:5000` + '/api');
 
     const handleSubmit = async (e) => {
         e.preventDefault();

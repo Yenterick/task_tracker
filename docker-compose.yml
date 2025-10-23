@@ -46,7 +46,6 @@ services:
     ports:
       - "5173:5173"
     environment:
-      VITE_BACKEND_URL: http://localhost:5000
       NODE_ENV: "production"
     volumes:
       - ./frontend:/usr/src/app

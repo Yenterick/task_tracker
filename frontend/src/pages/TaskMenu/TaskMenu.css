@@ -84,18 +84,6 @@
     border: none;
 }
 
-.task-list .task-container .task-buttons .high {
-    color: #ff6b6b;
-}
-
-.task-list .task-container .task-buttons .mid {
-    color: #ffe66d;
-}
-
-.task-list .task-container .task-buttons .low {
-    color: #70e000;
-}
-
 .task-list .task-container .task-buttons .button {
     background-color: transparent;
     border: none;

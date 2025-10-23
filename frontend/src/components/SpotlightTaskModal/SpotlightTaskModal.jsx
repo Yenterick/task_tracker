@@ -8,7 +8,7 @@ function SpotlightTaskModal ({ onClose, method, text, task_id }) {
     const [ description, setDescription ] = useState("");
     const [ priority, setPriority ] = useState("mid");
 
-    const { request, loading, error } = useFetch(import.meta.env.VITE_BACKEND_URL + '/api');
+    const { request, loading, error } = useFetch(`http://${window.location.hostname}:5000` + '/api');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
