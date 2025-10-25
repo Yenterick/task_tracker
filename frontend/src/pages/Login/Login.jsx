@@ -10,6 +10,7 @@ function Login() {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ data, setData ] = useState(null);
+    const [ loginError, setLoginError ] = useState(null);
     const navigate = useNavigate();
 
     const { request, loading, error } = useFetch(`http://${window.location.hostname}:5000` + '/api');
@@ -25,6 +26,7 @@ function Login() {
             setData(response);
             navigate("/taskMenu", { replace: true });
         } else {
+            setLoginError(true);
             console.error(error);
         }
     };
@@ -52,6 +54,7 @@ function Login() {
                 <input type="email" placeholder="Insert your email..." value={email} onChange={(e) => setEmail(e.target.value)} maxLength={40} required/>
                 <label>Password</label>
                 <input type="password" placeholder="Insert your password..." value={password} onChange={(e) => setPassword(e.target.value)} maxLength={20} required/>
+                {loginError && <p className="error-msg">Invalid Credentials!</p>}
                 <button type="submit" className="button" disabled={loading}> {loading ? "Loading..." : "Login"} </button>
             </form>
             <span>Don't you have an account? <a href="/register">Register</a></span>

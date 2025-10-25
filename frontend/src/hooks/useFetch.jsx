@@ -26,8 +26,8 @@ function useFetch(url = "") {
 
       setData(result);
       return result;
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      setError(error.message);
       return null;
     } finally {
       setLoading(false);

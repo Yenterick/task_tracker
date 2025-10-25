@@ -4,6 +4,7 @@ import useFetch from "../../hooks/useFetch";
 import PixelBlast from "../../components/PixelBlast/PixelBlast";
 import SpotlightCard from "../../components/SpotlightCard/SpotlightCard";
 import SpotlightLoading from "../../components/SpotlightLoading/SpotlightLoading";
+import SpotlightNotification from "../../components/SpotlightNotification/SpotlightNotification";
 import "./Register.css";
 
 function Register (){
@@ -11,6 +12,7 @@ function Register (){
     const [ username, setUsername ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ data, setData ] = useState(null);
+    const [ showNotification, setShowNotication ] = useState(false);
     const navigate = useNavigate();
 
     const { request, loading, error } = useFetch(`http://${window.location.hostname}:5000` + '/api');
@@ -22,7 +24,7 @@ function Register (){
 
         if (response && response.success) {
             setData(response);
-            navigate("/login", { replace: true });
+            setShowNotication(true);
         } else {
             console.error(error);
         }
@@ -42,6 +44,7 @@ function Register (){
                 edgeFade={0.25}
                 />
             </div>
+            {showNotification && <SpotlightNotification message="Registered succesfully!" onClose={() => navigate("/login", { replace: true })}/>}
             <SpotlightCard className="register-block" spotlightColor="#B19EEF">
                 <h2>¡Welcome!</h2>
                 <p>Sign up to continue</p>
