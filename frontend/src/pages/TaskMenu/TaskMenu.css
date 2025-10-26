@@ -9,12 +9,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    background: black;
 }
 
 .background { 
     width: 100%; 
     height: 100%; 
-    background: black;
     position: absolute;
     top: 0;
     left: 0;
@@ -33,6 +33,7 @@
     flex-direction: column;
     gap: 1rem;
     overflow-y: auto;
+    padding-bottom: 6rem;
 }
 
 .task-list .task-container {
@@ -43,16 +44,52 @@
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 0.5rem;
     padding: 1rem;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .task-list .task-container:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.task-list .task-container.completed {
+    background-color: rgb(219, 238, 158, 0.15);
+    filter: brightness(0.8);
+    text-decoration: none;
+    opacity: 0.7;
+    animation: fadeCompleted 0.6s ease-in-out;
+}
+
+.task-list .task-container.completed .task-text {
+    text-decoration: line-through;
+}
+
+.task-list .task-container.completed .task-buttons,
+.task-list .task-container.completed .task-buttons * {
+    text-decoration: none !important;
+}
+
+@keyframes fadeCompleted {
+    0% {
+        background-color: rgba(255, 255, 255, 0.05);
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        background-color: rgb(219, 238, 158, 0.25);
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+    100% {
+        background-color: rgb(219, 238, 158, 0.15);
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
 .task-list .task-container .task-text {
     width: 80%;
     color: white;
+    word-break: break-word;
 }
 
 .task-list .task-container .task-text h2 {
@@ -67,6 +104,7 @@
 }
 
 .task-list .task-container .task-buttons {
+    text-decoration: none !important;
     display: flex;
     gap: 0.5rem;
     justify-content: flex-end;
@@ -96,6 +134,7 @@
     align-items: center;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    border-radius: 0.4rem;
 }
 
 .task-list .task-container .task-buttons .button:hover {
@@ -105,6 +144,56 @@
 .task-list .task-container .task-buttons .button:active {
     background-color: #ffffff;
     color: #8b6dec;
+}
+
+/* Switch config */
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.slider {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #3a3a3a;
+  border-radius: 999px;
+  transition: background-color 0.3s ease;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: left 0.3s ease, background-color 0.3s ease;
+}
+
+.switch input:checked + .slider {
+  background-color: #a2d46f;
+}
+
+.switch input:checked + .slider::before {
+  left: calc(100% - 3px - 22px);
 }
 
 /* Footer config */
@@ -120,6 +209,7 @@
     color: white;
     z-index: 10;
     transition: all 0.2s ease;
+    border-radius: 15%;
 }
 
 #add-task {
@@ -147,6 +237,16 @@
     background-color: transparent;
 }
 
+@media (min-width: 1200px) {
+  .task-list .task-container .task-buttons {
+    align-items: center;
+  }
+
+  .task-list .task-container .task-buttons .switch {
+    transform: translateY(-2px);
+  }
+}
+
 @media (max-width: 768px) {
     .task-list {
         width: 95%;
@@ -156,6 +256,7 @@
     .task-list .task-container {
         flex-direction: column;
         align-items: flex-start;
+        padding: 0.8rem;
     }
 
     .task-list .task-container .task-text {

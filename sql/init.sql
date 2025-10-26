@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS tasks(
   user_id INT,
   title VARCHAR(100),
   description TEXT,
-  status ENUM('pending', 'in progress', 'completed'),
+  status ENUM('pending', 'completed'),
   priority ENUM('low', 'mid', 'high'),
   created_at TIMESTAMP default current_timestamp,
   foreign key(user_id) references users(id)

@@ -59,10 +59,24 @@ const updateTask = async (req, res) => {
     }
 }
 
+const updateTaskStatus = async(req, res) =>{
+    const { task_id } = req.params;
+    const { status } = req.body;
+
+    const result = await taskModel.updateTaskStatus(task_id, status);
+
+    if (result.error) {
+        res.status(400).json({ success: false, message: result.error.message });
+    } else {
+        res.status(200).json({ success: true, message: "Task updated succesfully"});
+    }
+}
+
 module.exports = {
     showAllTasks,
     showTasks,
     addTask,
     deleteTask,
-    updateTask
+    updateTask,
+    updateTaskStatus
 }

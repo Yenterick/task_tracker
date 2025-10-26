@@ -44,6 +44,14 @@ function TaskMenu() {
     navigate("/login", { replace: true });
   }
 
+  const handleStatusUpdate = async (taskId, currentStatus) => {
+    const newStatus = currentStatus === "pending" ? "completed" : "pending";
+    const response = await request(`/task/status/${taskId}`, "PUT", { status: newStatus });
+    if (!response || !response.success) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="taskMenu-page">
       <div className="background">
@@ -64,12 +72,13 @@ function TaskMenu() {
 
       <div className="task-list">
         <AnimatedList showGradients={false} displayScrollbar items={tasks.map((task, id) => (
-          <div key={task.id} className="task-container">
+          <div key={task.id} className={`task-container ${task.status === "completed" ? "completed" : ""}`}>
             <div className="task-text">
               <h2>{task.title}</h2>
               <p>{task.description}</p>
             </div>
             <div className="task-buttons">
+                <label className="switch"><input type="checkbox" checked={task.status === "completed"} onChange={() => handleStatusUpdate(task.id, task.status)}/><span className="slider round"></span></label>
               <i id="priority-status" style={{color : task.priority === "high"? "#ff6b6b" : task.priority === "mid" ? "#ffe66d" : "#70e000" }} class="fa-solid fa-circle"></i>
               <button className="button" onClick={() => handleEdit(task.id)}><i class="fa-solid fa-pencil"></i></button>
               <button className="button" onClick={() => handleDelete(task.id)}><i class="fa-solid fa-trash"></i></button>

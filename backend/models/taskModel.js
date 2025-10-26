@@ -44,6 +44,15 @@ const TaskModel = {
         } catch (e) {
             return { success: false, error: e };
         } 
+    },
+
+    updateTaskStatus : async (task_id, status) => {
+        try {
+            const [ rows ] = await db.promise().query('UPDATE tasks SET status = ? WHERE id = ?', [status, task_id]);
+            return { success: true, data: rows };
+        } catch (e) {
+            return { success: false, error: e };
+        } 
     }
 };
 
