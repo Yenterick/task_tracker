@@ -33,6 +33,7 @@ services:
       DB_USER: Yenterick
       DB_PASSWORD: 2007
       DB_NAME: task_tracker
+      JWT_SECRET_KEY: 0328
     depends_on:
       db:
         condition: service_healthy

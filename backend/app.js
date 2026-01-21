@@ -14,6 +14,10 @@ app.use('/api/user', user);
 app.use('/api/task', task);
 app.use('/api/subtask', subtask);
 
+app.get('/health', (req, res) => {
+    res.status(400).json({ success: true, message: "Task tracker is healthy and working..." })
+})
+
 app.listen(5000, () => {
     console.log("App is listening on port 5000...");
 })

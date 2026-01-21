@@ -25,6 +25,7 @@ function Register (){
         if (response && response.success) {
             setData(response);
             setShowNotication(true);
+            navigate('/login', { replace: true });
         } else {
             console.error(error);
         }

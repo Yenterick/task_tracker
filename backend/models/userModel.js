@@ -10,9 +10,9 @@ const userModel = {
         }
     },
 
-    insertUser : async (email, username, password) => {
+    insertUser : async (username, email, password) => {
         try {
-            const [ rows ] = await db.promise().query('INSERT INTO users (username, email, password) values (?, ?, ?)', [email, username, password]);
+            const [ rows ] = await db.promise().query('INSERT INTO users (username, email, password) values (?, ?, ?)', [username, email, password]);
             return { success: true, data: rows };
         } catch (e) {
             return { success: false, error: e }

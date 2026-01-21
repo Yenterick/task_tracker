@@ -11,7 +11,7 @@ function ProtectedRoute({ children }) {
   if (!token || !ID) {
     localStorage.setItem("token", "");
     localStorage.setItem("ID", "");
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace/>;
   }
 
   return children;
@@ -28,8 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/register" element={<Register/>}/>
 
         <Route path="/taskMenu" element={<ProtectedRoute><TaskMenu/></ProtectedRoute>}/>
 

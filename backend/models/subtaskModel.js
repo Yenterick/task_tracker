@@ -22,7 +22,7 @@ const subtaskModel = {
     insertSubTask : async (task_id, title) => {
         try {
             const [ rows ] = await db.promise().query('INSERT INTO subtasks (task_id, title, status) VALUES (?, ?, ?)', [task_id, title, "pending"]);
-            return { successs: true, data: rows };
+            return { success: true, data: rows };
         } catch (e) {
             return { success: false, error: e };
         }

@@ -22,7 +22,7 @@ const TaskModel = {
     insertTask : async (user_id, title, description, priority) => {
         try {
             const [ rows ] = await db.promise().query('INSERT INTO tasks (user_id, title, description, status, priority) VALUES (?, ?, ?, ?, ?)', [user_id, title, description, "pending", priority]);
-            return { successs: true, data: rows };
+            return { success: true, data: rows };
         } catch (e) {
             return { success: false, error: e };
         }

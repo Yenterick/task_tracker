@@ -3,7 +3,7 @@ const taskModel = require('../models/taskModel.js');
 const showAllTasks = async (req, res) => {
     const result = await taskModel.selectAllTasks();
     if (result.error) {
-        res.status(400).json({ succes: false, message: result.error.message });
+        res.status(400).json({ success: false, message: result.error.message });
     } else {
         res.status(200).json({ success: true, data: result.data });
     }
