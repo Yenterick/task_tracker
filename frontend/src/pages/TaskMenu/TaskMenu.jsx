@@ -14,21 +14,23 @@ function TaskMenu() {
   const [ showEditModal, setShowEditModal ] = useState(false);
   const { request, loading, error } = useFetch(`http://${window.location.hostname}:5000` + "/api");
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-        const response = await request(`/task/${localStorage.getItem("ID")}`, "GET");
-        if (response && response.success) {
-          setTasks(response.data);
-        } else {
-          console.error(error);
-        }
-      }
-    fetchTasks();
-  }, [tasks]);
+  const fetchTasks = async () => {
+    const response = await request(`/task/`, "GET");
+    if (response && response.success) {
+      setTasks(response.data);
+    } else {
+      console.error(error);
+    }
+  }
 
-  const handleEdit = async (taskId) => {
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const handleEdit = (taskId) => {
     setTask_id(taskId)
     setShowEditModal(true);
+    fetchTasks();
   }
 
   const handleDelete = async (taskId) => {
@@ -36,11 +38,11 @@ function TaskMenu() {
     if (!response || !response.success) {
       console.log(error);
     }
+    fetchTasks();
   }
 
   const handleLogOut = () => {
     localStorage.setItem("token", "");
-    localStorage.setItem("ID", "");
     navigate("/login", { replace: true });
   }
 
@@ -50,7 +52,10 @@ function TaskMenu() {
     if (!response || !response.success) {
       console.log(error);
     }
+    fetchTasks();
   }
+
+  
 
   return (
     <div className="taskMenu-page">
@@ -67,8 +72,28 @@ function TaskMenu() {
         />
       </div>
 
-      { showAddModal && <SpotlightTaskModal method="POST" text="Insert a New Task!" onClose={() => setShowAddModal(false)}/> }
-      { showEditModal && <SpotlightTaskModal task_id={task_id} method="PUT" text="Insert the New Values!" onClose={() => setShowEditModal(false)}/> }
+      { showAddModal && <SpotlightTaskModal 
+                          method="POST" 
+                          text="Insert a New Task!" 
+                          onClose={() => {
+                            setShowAddModal(false);
+                            fetchTasks();
+                            }
+                          }
+                        />
+      }
+
+      { showEditModal && <SpotlightTaskModal 
+                          task_id={task_id} 
+                          method="PUT" 
+                          text="Insert the New Values!" 
+                          onClose={() => {
+                            setShowEditModal(false);
+                            fetchTasks();
+                            }
+                          }
+                        /> 
+      }
 
       <div className="task-list">
         <AnimatedList showGradients={false} displayScrollbar items={tasks.map((task, id) => (

@@ -1,5 +1,6 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const auth = require('../middlewares/auth.middleware.js');
 const {
    showAllTasks,
    showTasks, 
@@ -9,10 +10,10 @@ const {
    updateTaskStatus
 } = require('../controllers/task.js');
 
-router.get('/:user_id', showTasks);
-router.post('/:user_id', addTask);
-router.delete('/:task_id', deleteTask);
-router.put('/:task_id', updateTask);
-router.put('/status/:task_id', updateTaskStatus);
+router.get('/', auth, showTasks);
+router.post('/', auth, addTask);
+router.delete('/:task_id', auth, deleteTask);
+router.put('/:task_id', auth, updateTask);
+router.put('/status/:task_id', auth, updateTaskStatus);
 
 module.exports = router;

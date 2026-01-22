@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel.js');
 const { generateToken } = require('../config/jwt.js');
 const bcrypt = require('bcrypt');
+
 const saltRounds = 3;
 
 const showAllUsers = async (req, res) => {
@@ -37,7 +38,7 @@ const logUser = async (req, res) => {
 
     if (!valid) return res.status(401).json({ success: false, message: "Incorrect password" });
 
-    const token = generateToken({ id: user.id, email: user.email });
+    const token = generateToken(user);
 
     res.status(200).json({ success: true, message: "Logged successfully", token, id: user.id });
 }

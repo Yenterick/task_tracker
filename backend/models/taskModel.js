@@ -1,6 +1,15 @@
 const db = require("../config/database.js");
 
 const TaskModel = {
+    selectTaskByID : async (task_id) => {
+        try {
+            const [ rows ] = await db.promise().query('SELECT * FROM tasks WHERE id = ?', [task_id]);
+            return { success: true, data: rows };
+        } catch (e) {
+            return { success: false, error: e };
+        }
+    },
+
     selectAllTasks : async () => {
         try {
             const [ rows ] = await db.promise().query('SELECT * FROM tasks');

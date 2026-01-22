@@ -1,6 +1,16 @@
 const db = require("../config/database.js");
 
 const subtaskModel = {
+    selectSubTaskByID : async (subtask_id) => {
+        try {
+            const [ rows ] = await db.promise().query('SELECT * FROM subtasks WHERE id = ?', [subtask_id]);
+            return { success: true, data: rows };
+        } catch (e) {
+            return { success: false, error: e };
+        }
+    },
+
+
     selectAllSubTasks : async () => {
         try {
             const [ rows ] = await db.promise().query('SELECT * FROM subtasks');

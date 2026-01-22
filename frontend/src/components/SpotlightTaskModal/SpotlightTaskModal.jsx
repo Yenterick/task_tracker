@@ -14,7 +14,7 @@ function SpotlightTaskModal ({ onClose, method, text, task_id }) {
         e.preventDefault();
 
         if (method == "POST"){
-            const response = await request(`/task/${localStorage.getItem("ID")}`, "POST", { title, description, priority })
+            const response = await request(`/task/`, "POST", { title, description, priority })
         } else if (method == "PUT"){
             const response = await request(`/task/${task_id}`, "PUT", { title, description, priority });
         }

@@ -22,7 +22,6 @@ function Login() {
 
         if (response && response.success) {
             localStorage.setItem("token", response.token);
-            localStorage.setItem("ID", response.id)
             setData(response);
             navigate("/taskMenu", { replace: true });
         } else {

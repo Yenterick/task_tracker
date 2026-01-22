@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-function useFetch(url = "") {
+function useFetch(baseUrl = "") {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -10,29 +10,40 @@ function useFetch(url = "") {
     setError(null);
 
     try {
+      const token = localStorage.getItem("token");
+
       const options = {
         method: method.toUpperCase(),
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
       };
 
-      if (body && method !== "GET") {
+      if (body) {
         options.body = JSON.stringify(body);
       }
 
-      const response = await fetch(url + endpoint, options);
-
+      const response = await fetch(baseUrl + endpoint, options);
       const result = await response.json();
-      if (!response.ok) throw new Error(result.message || `HTTP ${response.status}`);
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        }
+        throw new Error(result.message || `HTTP ${response.status}`);
+      }
 
       setData(result);
       return result;
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      setError(err.message);
       return null;
     } finally {
       setLoading(false);
     }
-  }, [url]);
+  }, [baseUrl]);
 
   return { data, loading, error, request };
 }

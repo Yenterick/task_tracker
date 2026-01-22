@@ -10,7 +10,7 @@ const showAllTasks = async (req, res) => {
 }
 
 const showTasks = async (req, res) => {
-    const { user_id } = req.params;
+    const user_id = req.user.id;
 
     const result = await taskModel.selectAllUserTasks(user_id);
 
@@ -22,20 +22,31 @@ const showTasks = async (req, res) => {
 }
 
 const addTask = async (req, res) => {
-    const { user_id } = req.params;
-    const { title, description, priority } = req.body;
+    try {
+        const user_id = req.user.id;
+        const { title, description, priority } = req.body;
 
-    const result = await taskModel.insertTask(user_id, title, description, priority);
-    
-    if (result.error) {
-        res.status(400).json({ success: false, message: result.error.message });
-    } else {
-        res.status(201).json({ success: true, message: "Task created successfully"});
+        const result = await taskModel.insertTask(user_id, title, description, priority);
+        
+        if (result.error) {
+            res.status(400).json({ success: false, message: result.error.message });
+        } else {
+            res.status(201).json({ success: true, message: "Task created successfully"});
+        }
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
     }
 }
 
 const deleteTask = async (req, res) => {
     const { task_id } = req.params;
+    const user_id = req.user.id;
+
+    const task = (await taskModel.selectTaskByID(task_id)).data[0];
+    
+    if (!task || task.user_id !== user_id) {
+        return res.status(403).json({ success: false, message: "Authorization declined" });
+    }
 
     const result = await taskModel.deleteTask(task_id);
     
@@ -49,6 +60,13 @@ const deleteTask = async (req, res) => {
 const updateTask = async (req, res) => {
     const { task_id } = req.params;
     const { title, description, priority } = req.body;
+    const user_id = req.user.id;
+
+    const task = (await taskModel.selectTaskByID(task_id)).data[0];
+    
+    if (!task || task.user_id !== user_id) {
+        return res.status(403).json({ success: false, message: "Authorization declined" });
+    }
 
     const result = await taskModel.updateTask(task_id, title, description, priority);
 
@@ -62,6 +80,13 @@ const updateTask = async (req, res) => {
 const updateTaskStatus = async(req, res) =>{
     const { task_id } = req.params;
     const { status } = req.body;
+    const user_id = req.user.id;
+
+    const task = (await taskModel.selectTaskByID(task_id)).data[0];
+    
+    if (!task || task.user_id !== user_id) {
+        return res.status(403).json({ success: false, message: "Authorization declined" });
+    }
 
     const result = await taskModel.updateTaskStatus(task_id, status);
 
